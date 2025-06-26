@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Countdown to Colorado!</title>
+        <link rel="icon" type="image/x-icon" href="images/webFavicon.ico">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <style>
+        #background {
+            background:linear-gradient(midnightblue,rgb(61, 25, 112));
+            position:fixed; top:0; bottom:0; left:0; right:0;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin:auto;
+            padding:40px 10px 40px 10px;
+            text-align: center;
+        }
+
+            .container > img {
+                width:90%; max-width: 500px; height: auto; margin: auto;
+            }
+
+        #counter > div {
+            display:flex; flex-flow:row;
+        }
+            #counter > div > div {
+                color:black;
+                width:99%; background:rgba(255,255,255,0.5);
+                margin:1%;
+                border-radius: 10px;
+                padding:5px;
+            }
+                #counter > div > div > b {
+                    font-size:40px;
+                }
+                #counter > div > div > em {
+                    font-size:20px;
+                    color:white;
+                    font-style: normal;
+                }
+    </style>
+
+    <body style="color:white; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+
+        <div id="background"></div>
+
+        <div class="container">
+            <h1>Countdown to Colorado !!</h1>
+            <select id='dateSelect' style='font-size: 14px; padding:10px; border-radius: 10px;' onchange="location.reload();"> 
+                <!-- <option value="MMMM D, YYYY | HH:MM:SS | HH:MM AM/PM">Trip Name</option> 
+                        -> use 24 hour time format (2:30PM = 14:30:00)
+                 -->
+                <option value="July 4, 2025 | 10:45:00 | 10:45 AM">
+                    Colorado Trip - July 2025
+                </option>
+            </select>
+        </div>
+
+        <div class="container">
+            <img src="images/milesPlusReuven.png">
+        </div>
+
+        <div class="container">
+            <h3>Miles and Reuven are Reunited in</h3>
+            <p id="counter" style="font-size: 25px;">
+                
+            </p>
+            <h3 id="dateText"></h3>
+        </div>
+
+        
+
+    </body>
+
+    <script>
+        const counterDisplay = document.getElementById('counter');
+        const dateSelect = document.getElementById('dateSelect');
+
+            let dateSelected = dateSelect.value.split(' | ');
+
+        const countdownTo = new Date(dateSelected[0] + " " + dateSelected[1]).getTime();
+
+        function updateCountdown(){
+            const timeNow = new Date().getTime();
+            const distance = countdownTo - timeNow;
+
+            if (distance < 0) {
+                // do something to celebrate
+                counterDisplay.innerHTML = "<p style='font-size:40px;'>&#127881; RIGHT NOW!!!! &#127881;";
+                clearInterval(interval);
+            }else{
+
+                counterDisplay.innerHTML = "<div><div id='days'></div><div id='hours'></div><div id='minutes'></div><div id='seconds'></div></div>";
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerHTML = "<b>"+days + "</b><br><em>Days</em>";
+                document.getElementById("hours").innerHTML = "<b>"+hours + "</b><br><em>Hours</em>";
+                document.getElementById("minutes").innerHTML = "<b>"+minutes + "</b><br><em>Minutes</em>";
+                document.getElementById("seconds").innerHTML = "<b>"+seconds + "</b><br><em>Seconds</em>";
+
+                document.getElementById('dateText').innerHTML = "on <b>"+dateSelected[0]+"</b> at <b>"+dateSelected[2]+"</b>";
+            }
+
+
+        }
+
+        const interval = setInterval(updateCountdown, 1000);
+        updateCountdown(); // initial call
+
+    </script>
+</html>
