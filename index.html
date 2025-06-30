@@ -52,12 +52,15 @@
 
         <div class="container">
             <h1>Countdown to Colorado !!</h1>
-            <select id='dateSelect' style='font-size: 14px; padding:10px; border-radius: 10px;' onchange="location.reload();"> 
+            <select id='dateSelect' style='font-size: 14px; padding:10px; border-radius: 10px;' onchange="changeDate();"> 
                 <!-- <option value="MMMM D, YYYY | HH:MM:SS | HH:MM AM/PM">Trip Name</option> 
                         -> use 24 hour time format (2:30PM = 14:30:00)
                  -->
                 <option value="July 4, 2025 | 10:45:00 | 10:45 AM">
                     Colorado Trip - July 2025
+                </option>
+                <option value="August 25, 2025 | 17:00:00 | 5:00 PM">
+                    End of Miles's Internship - August 25
                 </option>
             </select>
         </div>
@@ -82,7 +85,14 @@
         const counterDisplay = document.getElementById('counter');
         const dateSelect = document.getElementById('dateSelect');
 
-            let dateSelected = dateSelect.value.split(' | ');
+        // URL PARAMETERS
+        const params = new URLSearchParams(window.location.search);
+        const urlDate = params.get("date"); // Returns value or null
+        if(urlDate){
+            dateSelected.selectedIndex = urlDate;
+        }
+
+        let dateSelected = dateSelect.value.split(' | ');
 
         const countdownTo = new Date(dateSelected[0] + " " + dateSelected[1]).getTime();
 
@@ -116,6 +126,12 @@
 
         const interval = setInterval(updateCountdown, 1000);
         updateCountdown(); // initial call
+
+        function changeDate(){
+
+            window.load("?date=" + dateSelected.selectedIndex);
+
+        }
 
     </script>
 </html>
