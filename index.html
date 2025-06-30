@@ -89,7 +89,7 @@
         const params = new URLSearchParams(window.location.search);
         const urlDate = params.get("date"); // Returns value or null
         if(urlDate){
-            dateSelected.selectedIndex = urlDate;
+            dateSelect.selectedIndex = urlDate;
         }
 
         let dateSelected = dateSelect.value.split(' | ');
@@ -129,7 +129,7 @@
 
         function changeDate(){
 
-            window.load("?date=" + dateSelected.selectedIndex);
+            window.open("?date=" + dateSelect.selectedIndex);
 
         }
 
