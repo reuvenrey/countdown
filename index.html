@@ -51,15 +51,15 @@
         <div id="background"></div>
 
         <div class="container">
-            <h1>Countdown to Colorado !!</h1>
+            <h1 id='pageTitle'>Countdown to Colorado !!</h1>
             <select id='dateSelect' style='font-size: 14px; padding:10px; border-radius: 10px;' onchange="changeDate();"> 
-                <!-- <option value="MMMM D, YYYY | HH:MM:SS | HH:MM AM/PM">Trip Name</option> 
+                <!-- <option value="MMMM D, YYYY | HH:MM:SS | HH:MM AM/PM | Title">Trip Name</option> 
                         -> use 24 hour time format (2:30PM = 14:30:00)
                  -->
-                <option value="July 4, 2025 | 10:45:00 | 10:45 AM">
+                <option value="July 4, 2025 | 10:45:00 | 10:45 AM | Countdown to Colorado!">
                     Colorado Trip - July 2025
                 </option>
-                <option value="August 25, 2025 | 17:00:00 | 5:00 PM">
+                <option value="August 22, 2025 | 17:00:00 | 5:00 PM | Countdown to Concluding Miles's Internship!">
                     End of Miles's Internship - August 25
                 </option>
             </select>
@@ -93,6 +93,7 @@
         }
 
         let dateSelected = dateSelect.value.split(' | ');
+        document.getElementById('pageTitle').innerHTML = dateSelected[3];
 
         const countdownTo = new Date(dateSelected[0] + " " + dateSelected[1]).getTime();
 
