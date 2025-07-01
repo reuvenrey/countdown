@@ -6,11 +6,12 @@
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
     </head>
 
     <style>
         #background {
-            background:linear-gradient(midnightblue,rgb(61, 25, 112));
+            background:linear-gradient(DeepSkyBlue,SteelBlue);
             position:fixed; top:0; bottom:0; left:0; right:0;
             z-index: -1;
         }
@@ -30,7 +31,8 @@
             display:flex; flex-flow:row;
         }
             #counter > div > div {
-                color:black;
+                color:Ivory;
+                font-family:chewy;
                 width:99%; background:rgba(255,255,255,0.5);
                 margin:1%;
                 border-radius: 10px;
@@ -66,7 +68,7 @@
         </div>
 
         <div class="container">
-            <img src="images/milesPlusReuven.png">
+            <!--<img src="images/milesPlusReuven.png">-->
         </div>
 
         <div class="container">
@@ -77,6 +79,10 @@
             <h3 id="dateText"></h3>
         </div>
 
+        <div class='container'>
+            <button id='copyBtn' onclick='copyCountdown();'>Copy the current countdown</button>
+        </div>
+
         
 
     </body>
@@ -84,6 +90,8 @@
     <script>
         const counterDisplay = document.getElementById('counter');
         const dateSelect = document.getElementById('dateSelect');
+
+        var isTime = 0;
 
         // URL PARAMETERS
         const params = new URLSearchParams(window.location.search);
@@ -104,6 +112,7 @@
             if (distance < 0) {
                 // do something to celebrate
                 counterDisplay.innerHTML = "<p style='font-size:40px;'>&#127881; RIGHT NOW!!!! &#127881;";
+                isTime = 1;
                 clearInterval(interval);
             }else{
 
@@ -114,9 +123,9 @@
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                document.getElementById("days").innerHTML = "<b>"+days + "</b><br><em>Days</em>";
-                document.getElementById("hours").innerHTML = "<b>"+hours + "</b><br><em>Hours</em>";
-                document.getElementById("minutes").innerHTML = "<b>"+minutes + "</b><br><em>Minutes</em>";
+                document.getElementById("days").innerHTML = "<b id='val-days'>"+days + "</b><br><em>Days</em>";
+                document.getElementById("hours").innerHTML = "<b id='val-hours'>"+hours + "</b><br><em>Hours</em>";
+                document.getElementById("minutes").innerHTML = "<b id='val-minutes'>"+minutes + "</b><br><em>Minutes</em>";
                 document.getElementById("seconds").innerHTML = "<b>"+seconds + "</b><br><em>Seconds</em>";
 
                 document.getElementById('dateText').innerHTML = "on <b>"+dateSelected[0]+"</b> at <b>"+dateSelected[2]+"</b>";
@@ -132,6 +141,17 @@
 
             window.open("?date=" + dateSelect.selectedIndex, "_self");
 
+        }
+
+        function copyCountdown(){
+            if(isTime != 1){
+                let textVal = "Miles and Reuven are reunited in " + document.getElementById('val-days').innerHTML + " days, " + document.getElementById('val-hours').innerHTML + " hours, and " + document.getElementById('val-minutes').innerHTML + " minutes! ";
+                navigator.clipboard.writeText(textVal);
+                document.getElementById('copyBtn').innerHTML = "Copied!";    
+            }else{
+                navigator.clipboard.writeText("Miles and Reuven are reunited RIGHT NOW!");
+                document.getElementById('copyBtn').innerHTML = "Copied!"; 
+            }
         }
 
     </script>
